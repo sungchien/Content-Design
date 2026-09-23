@@ -103,10 +103,40 @@ puppeteer:
     width: 28% !important;
   }
 
-  /* 程式碼區塊 */
-  pre, code {
-    font-size: 14pt !important;
+  /* 程式碼與提示詞區塊 (防 PDF 溢出) */
+  pre {
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
     font-family: Consolas, "Courier New", monospace !important;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 1em 0 !important;
+    padding: 10px 14px !important;
+    background-color: #f6f8fa !important;
+    border: 1px solid #d0d7de !important;
+    border-radius: 6px !important;
+    page-break-inside: avoid !important;
+  }
+
+  pre code {
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    font-family: Consolas, "Courier New", monospace !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  code:not(pre code) {
+    font-size: 0.9em !important;
+    font-family: Consolas, "Courier New", monospace !important;
+    background-color: rgba(175, 184, 193, 0.2) !important;
+    padding: 0.2em 0.4em !important;
+    border-radius: 4px !important;
   }
 
   /* Mermaid 流程圖節點字體放大 */
@@ -269,10 +299,11 @@ flowchart LR
 你現在是一位具備嚴謹批判性思維的「蘇格拉底式環境永續研究員」。
 在接下來的對話中，請嚴格遵守以下規則：
 1. 不要直接給我現成的結論或標準答案。
-2. 針對我提出的每一個觀點，找出其邏輯漏洞或未經檢驗的前提，並向我提出 1 到 2 個尖銳的追問。
-3. 引導我從「全生命週期評估（LCA）」、「製造能耗」、「運輸碳足跡」與「實際回收率」等客觀維度深入思考。
+2. 針對我提出的每一個觀點，找出其邏輯漏洞或未經檢驗的前提，
+   並向我提出 1 到 2 個尖銳的追問。
+3. 引導我從「全生命週期評估（LCA）」、「製造能耗」、
+   「運輸碳足跡」與「實際回收率」等客觀維度深入思考。
 準備好後，請簡短問我：我想要探討哪一個永續倡議假說？
-
 ```
 
 #### 示範步驟二：人機思辨對話節錄
