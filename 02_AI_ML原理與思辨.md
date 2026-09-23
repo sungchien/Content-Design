@@ -23,15 +23,89 @@ puppeteer:
   h3 { font-size: 18pt !important; }
   h4 { font-size: 15pt !important; }
 
-  /* 表格文字放大與排版優化 */
-  table, th, td {
-    font-size: 16pt !important;
-    line-height: 1.5 !important;
+  /* 表格文字與排版優化 (防 PDF 溢出) */
+  table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    box-sizing: border-box !important;
+    margin: 1.2em 0 !important;
+    page-break-inside: auto !important;
+  }
+
+  thead {
+    display: table-header-group !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
+  }
+
+  th, td {
+    font-size: 11pt !important;
+    line-height: 1.45 !important;
+    padding: 6px 8px !important;
+    border: 1px solid #d0d7de !important;
+    vertical-align: top !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: normal !important;
+  }
+
+  th {
+    background-color: #f6f8fa !important;
+    font-weight: bold !important;
+    text-align: left !important;
+  }
+
+  /* 智慧欄寬配比 */
+  /* 2 欄表格 (例如：實作設定單) */
+  table tr > th:first-child:nth-last-child(2),
+  table tr > td:first-child:nth-last-child(2) {
+    width: 28% !important;
+  }
+  table tr > th:nth-child(2):nth-last-child(1),
+  table tr > td:nth-child(2):nth-last-child(1) {
+    width: 72% !important;
+  }
+
+  /* 3 欄表格 (例如：六大提問維度) */
+  table tr > th:first-child:nth-last-child(3),
+  table tr > td:first-child:nth-last-child(3) {
+    width: 22% !important;
+  }
+  table tr > th:nth-child(2):nth-last-child(2),
+  table tr > td:nth-child(2):nth-last-child(2) {
+    width: 28% !important;
+  }
+  table tr > th:nth-child(3):nth-last-child(1),
+  table tr > td:nth-child(3):nth-last-child(1) {
+    width: 50% !important;
+  }
+
+  /* 4 欄表格 (例如：AI/ML/DL/GenAI 技術層級) */
+  table tr > th:first-child:nth-last-child(4),
+  table tr > td:first-child:nth-last-child(4) {
+    width: 18% !important;
+  }
+  table tr > th:nth-child(2):nth-last-child(3),
+  table tr > td:nth-child(2):nth-last-child(3) {
+    width: 22% !important;
+  }
+  table tr > th:nth-child(3):nth-last-child(2),
+  table tr > td:nth-child(3):nth-last-child(2) {
+    width: 32% !important;
+  }
+  table tr > th:nth-child(4):nth-last-child(1),
+  table tr > td:nth-child(4):nth-last-child(1) {
+    width: 28% !important;
   }
 
   /* 程式碼區塊 */
   pre, code {
-    font-size: 16pt !important;
+    font-size: 14pt !important;
     font-family: Consolas, "Courier New", monospace !important;
   }
 
@@ -84,18 +158,22 @@ puppeteer:
 如下圖所示，傳統程式設計與機器學習在資料流動與邏輯產出上，呈現出完全相反的範式：
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph Traditional["傳統程式設計（Rule-based Programming）"]
+        direction TB
         R1["人類專家手寫規則<br/>（Rules / 程式邏輯）"] --> P1["運算處理器"]
         D1["輸入原始數據<br/>（Data）"] --> P1
         P1 --> A1["輸出答案<br/>（Answers / 執行結果）"]
     end
 
     subgraph ML["機器學習（Machine Learning）"]
+        direction TB
         D2["輸入大量數據<br/>（Data）"] --> P2["機器學習演算法<br/>（統計優化與權重調整）"]
         A2["標註答案 / 回饋<br/>（Answers / Labels）"] --> P2
         P2 --> R2["自主學習產出規則<br/>（Model / 數學模型）"]
     end
+
+    Traditional ~~~ ML
 
 ```
 
@@ -152,15 +230,19 @@ flowchart TD
 ```mermaid
 flowchart LR
     subgraph Passive["傳統單向指令模式（易生平庸）"]
+        direction TB
         U1["使用者輸入粗略指令<br/>『請寫一份減塑文案』"] --> AI1["Gemini 給出主流平均答案<br/>（空泛陳腔濫調）"]
         AI1 --> End1["直接複製貼上<br/>（專案缺乏深度與靈魂）"]
     end
 
     subgraph Socratic["蘇格拉底提問模式（激盪洞察）"]
+        direction TB
         U2["使用者提出初步假設<br/>『我們認為大學生不自備環保杯是因為麻煩』"] --> AI2["Gemini 扮演思辨教練進行反詰<br/>『麻煩的具體代價是什麼？清洗成本還是攜帶重量？』"]
         AI2 --> U3["使用者補充田野觀察與論點檢驗"]
         U3 --> AI3["深度辯證收斂核心痛點<br/>（精準擊中行為心理障礙）"]
     end
+
+    Passive ~~~ Socratic
 
 ```
 
@@ -206,7 +288,9 @@ flowchart LR
 
 請同學們打開筆電或平板，連線至 Gemini（[gemini.google.com](https://gemini.google.com)），進行 3 分鐘快速實作：
 1. 輸入以下提示詞，啟動思辨教練：
-   > `請扮演我的專案思辨教練。我目前正在規劃一個大專院校的永續行銷專案，我認為【請填入一項你目前的主觀想法，例如：大學生之所以不自備環保杯是因為忘記帶】。請用蘇格拉底的方式，提出兩個最刁鑽的問題挑戰我的觀點。`
+   > `請扮演我的專案思辨教練。我目前正在規劃一個大專院校的永續行銷專案，`
+   > `我認為【請填入一項你目前的主觀想法，例如：大學生之所以不自備環保杯`
+   > `是因為忘記帶】。請用蘇格拉底的方式，提出兩個最刁鑽的問題挑戰我的觀點。`
 2. 閱讀 Gemini 拋出的兩個反詰問題，體會思維被挑戰的感覺。
 3. 與組員分享：「哪一個問題讓你覺得最難以回答？」
 

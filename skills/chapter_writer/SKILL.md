@@ -252,6 +252,7 @@ tags:
 4. **純文字美金符號轉譯 (`\$50`)**：內文中的金額（如 `\$50` 元、`\$800` 元）必須轉譯，防止 VS Code 將同一段落中的多個美金符號誤判為 KaTeX 數學公式開頭與結尾。
 5. **反斜線轉譯保護**：當使用 Python 寫入或產出 Markdown 檔案時，公式中的反斜線（`\text`, `\frac`, `\beta`, `\right`, `\left`, `\times`, `\approx`, `\rightarrow`）必須採用原始字串 `r"..."` 或雙重轉譯。
 6. **完成後強制清理**：每次產出或編輯講義 Markdown 檔後，**必須強制執行** `@Script(scripts/clean_markdown.py)` 自動校正並修復所有 VS Code 排版、KaTeX 語法與 Markdown 格式！
+7. **表格防溢出列印排版（PDF 自適應）**：Markdown 表格轉 PDF 時極易超出 A4 寬度。必須在頂部 `<style>` 設置 `table { width: 100% !important; table-layout: fixed !important; }`、`th, td { font-size: 11pt !important; word-break: break-word !important; overflow-wrap: anywhere !important; }`，並配置 2~5 欄智慧百分比寬度。
 
 ---
 
